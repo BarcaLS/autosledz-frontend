@@ -1,8 +1,8 @@
 package com.kodilla.autosledz.devices;
 
-import com.kodilla.autosledz.domain.Book;
-import com.kodilla.autosledz.domain.BookForm;
-import com.kodilla.autosledz.domain.BookService;
+import com.kodilla.autosledz.domain.Device;
+import com.kodilla.autosledz.domain.DeviceForm;
+import com.kodilla.autosledz.domain.DeviceService;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
@@ -13,43 +13,43 @@ import com.vaadin.flow.router.Route;
 
 @Route
 public class MainView extends VerticalLayout {
-    private BookService bookService = BookService.getInstance();
-    private Grid<Book> grid = new Grid<>(Book.class);
+    private DeviceService deviceService = DeviceService.getInstance();
+    private Grid<Device> grid = new Grid<>(Device.class);
     private TextField filter = new TextField();
-    private BookForm form = new BookForm(this);
-    private Button addNewBook = new Button("Add new book");
+    private DeviceForm form = new DeviceForm(this);
+    private Button addNewDevice = new Button("Add new device");
 
     public MainView() {
-        filter.setPlaceholder("Filter by title...");
+        filter.setPlaceholder("Filter by name...");
         filter.setClearButtonVisible(true);
         filter.setValueChangeMode(ValueChangeMode.EAGER);
         filter.addValueChangeListener(e -> update());
-        grid.setColumns("title", "author", "publicationYear", "type");
+        grid.setColumns("id", "name", "uniqueId", "latitude", "longitude", "displayName", "created", "updated");
 
-        addNewBook.addClickListener(e -> {
+        addNewDevice.addClickListener(e -> {
             grid.asSingleSelect().clear();
-            form.setBook(new Book());
+            form.setDevice(new Device());
         });
 
-        HorizontalLayout toolbar = new HorizontalLayout(filter, addNewBook);
+        HorizontalLayout toolbar = new HorizontalLayout(filter, addNewDevice);
 
         HorizontalLayout mainContent = new HorizontalLayout(grid, form);
         mainContent.setSizeFull();
         grid.setSizeFull();
 
         add(toolbar, mainContent);
-        form.setBook(null);
+        form.setDevice(null);
         setSizeFull();
         refresh();
 
-        grid.asSingleSelect().addValueChangeListener(event -> form.setBook(grid.asSingleSelect().getValue()));
+        grid.asSingleSelect().addValueChangeListener(event -> form.setDevice(grid.asSingleSelect().getValue()));
     }
 
     public void refresh() {
-        grid.setItems(bookService.getBooks());
+        grid.setItems(deviceService.getDevices());
     }
 
     private void update() {
-        grid.setItems(bookService.findByTitle(filter.getValue()));
+        grid.setItems(deviceService.findByName(filter.getValue()));
     }
 }
