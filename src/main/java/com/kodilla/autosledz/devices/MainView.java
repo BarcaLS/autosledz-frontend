@@ -5,6 +5,8 @@ import com.kodilla.autosledz.domain.DeviceForm;
 import com.kodilla.autosledz.domain.DeviceService;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.grid.Grid;
+import com.vaadin.flow.component.html.Image;
+import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
@@ -13,6 +15,8 @@ import com.vaadin.flow.router.Route;
 
 @Route
 public class MainView extends VerticalLayout {
+    Image imageLogo = new Image("images/autosledz_logo.jpg","Autosledz Logo");
+    Label label = new Label("AUTOSLEDŹ");
     private DeviceService deviceService = DeviceService.getInstance();
     private Grid<Device> grid = new Grid<>(Device.class);
     private TextField filter = new TextField();
@@ -31,13 +35,24 @@ public class MainView extends VerticalLayout {
             form.setDevice(new Device());
         });
 
+        imageLogo.setWidth("100px");
+        imageLogo.getStyle().set("margin-left", "100px");
+        label.setWidth("100px");
+        label.getStyle().set("margin-left", "20px");
+        HorizontalLayout topBar = new HorizontalLayout(imageLogo, label);
+        topBar.setWidth("400px");
+        topBar.setDefaultVerticalComponentAlignment(Alignment.CENTER);
+
         HorizontalLayout toolbar = new HorizontalLayout(filter, addNewDevice);
+        toolbar.setSizeFull();
+        toolbar.setHeight("50px");
 
         HorizontalLayout mainContent = new HorizontalLayout(grid, form);
         mainContent.setSizeFull();
         grid.setSizeFull();
+        setDefaultHorizontalComponentAlignment(Alignment.CENTER);
 
-        add(toolbar, mainContent);
+        add(topBar, toolbar, mainContent);
         form.setDevice(null);
         setSizeFull();
         refresh();
