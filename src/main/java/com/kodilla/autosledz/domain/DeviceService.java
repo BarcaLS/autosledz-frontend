@@ -1,13 +1,16 @@
 package com.kodilla.autosledz.domain;
 
-import java.util.Date;
+import com.kodilla.autosledz.service.CarTrackService;
+
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 public class DeviceService {
     private Set<Device> devices;
     private static DeviceService deviceService;
+    private static CarTrackService carTrackService;
 
     private DeviceService() {
         this.devices = getData();
@@ -28,10 +31,13 @@ public class DeviceService {
         this.devices.add(device);
     }
 
-    private Set getData() {
-        Set devices = new HashSet<>();
+    public Set getData() {
+        List<Device> result = carTrackService.fetchCarTrackDevices();
+        return new HashSet<>(result);
+
+        /*Set devices = new HashSet<>();
         devices.add(new Device(0L, "auto Marcina", "DW234", 20.3443F, 30.23F, "takietam", new Date(), new Date()));
-        return devices;
+        return devices;*/
     }
 
     public Set findByName(String name) {
