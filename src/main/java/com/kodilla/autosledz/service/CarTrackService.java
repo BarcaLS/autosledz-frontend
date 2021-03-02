@@ -10,6 +10,8 @@ public class CarTrackService {
 
     public static void createCarTrackDevice(Device device) { CarTrackClient.createCarTrackDevice(device); }
 
+    public static void deleteCarTrackDevice(Device device) { CarTrackClient.deleteCarTrackDevice(device); }
+
     /*public List<TraccarUserDto> fetchTraccarUsers() { return traccarClient.getTraccarUsers(); }
 
     public List<TraccarPositionDto> fetchTraccarPositions() { return traccarClient.getTraccarPositions(); }

@@ -40,7 +40,5 @@ public class DeviceService {
         CarTrackService.createCarTrackDevice(device);
     }
 
-    public void delete(Device device) {
-        this.setDevices.remove(device);
-    }
+    public void delete(Device device) { CarTrackService.deleteCarTrackDevice(device); }
 }

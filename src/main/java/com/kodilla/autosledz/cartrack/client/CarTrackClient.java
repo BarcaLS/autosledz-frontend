@@ -40,8 +40,20 @@ public class CarTrackClient {
                 .encode()
                 .toUri();
         try {
-            DeviceDto test = new DeviceDto(0L, device.getName(), device.getUniqueId(), device.getLatitude(), device.getLongitude(), device.getDisplayName(), new Date(), new Date());
-            restTemplate.postForObject(url, test, DeviceDto.class);
+            DeviceDto deviceDto = new DeviceDto(0L, device.getName(), device.getUniqueId(), device.getLatitude(), device.getLongitude(), device.getDisplayName(), new Date(), new Date());
+            restTemplate.postForObject(url, deviceDto, DeviceDto.class);
+        } catch (RestClientException e) {
+            LOGGER.error(e.getMessage(), e);
+        }
+    }
+
+    public static void deleteCarTrackDevice(Device device) {
+        URI url = UriComponentsBuilder.fromHttpUrl(carTrackApiEndpoint + "/devices/" + device.getId())
+                .build()
+                .encode()
+                .toUri();
+        try {
+            restTemplate.delete(url);
         } catch (RestClientException e) {
             LOGGER.error(e.getMessage(), e);
         }
