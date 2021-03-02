@@ -4,15 +4,16 @@ import com.kodilla.autosledz.service.CarTrackService;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 public class DeviceService {
-    private Set<Device> devices;
+    private Set<Device> setDevices;
     private static DeviceService deviceService;
 
     private DeviceService() {
-        this.devices = getDevices();
+        this.setDevices = getDevices();
     }
 
     public static DeviceService getInstance() {
@@ -23,13 +24,16 @@ public class DeviceService {
     }
 
     public Set getDevices() {
-        CarTrackService carTrackService = new CarTrackService();
-        List<Device> devices = carTrackService.fetchCarTrackDevices();
+        List<Device> devices = CarTrackService.fetchCarTrackDevices();
         return new HashSet<>(devices);
     }
 
     public Set findByName(String name) {
-        return devices.stream().filter(device -> device.getName().contains(name)).collect(Collectors.toSet());
+        List<Device> devices = CarTrackService.fetchCarTrackDevices();
+        return devices.stream()
+                .filter(device -> Objects.nonNull(device.getName()))
+                .filter(device -> device.getName().contains(name))
+                .collect(Collectors.toSet());
     }
 
     public void save(Device device) {
@@ -37,6 +41,6 @@ public class DeviceService {
     }
 
     public void delete(Device device) {
-        this.devices.remove(device);
+        this.setDevices.remove(device);
     }
 }
