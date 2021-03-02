@@ -27,8 +27,6 @@ public class CarTrackClient {
         try {
             HttpEntity entity = createEntity();
             ResponseEntity<Device[]> devicesResponse = restTemplate.exchange(url, HttpMethod.GET, entity, Device[].class);
-            List<Device> dupa = Arrays.asList(devicesResponse.getBody());
-            System.out.println(dupa.size());
             return Arrays.asList(ofNullable(devicesResponse.getBody()).orElse(new Device[0]));
         } catch (RestClientException e) {
             LOGGER.error(e.getMessage(), e);
