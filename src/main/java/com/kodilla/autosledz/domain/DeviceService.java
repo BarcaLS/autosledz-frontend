@@ -12,7 +12,7 @@ public class DeviceService {
     private static DeviceService deviceService;
 
     private DeviceService() {
-        this.devices = getData();
+        this.devices = getDevices();
     }
 
     public static DeviceService getInstance() {
@@ -23,14 +23,6 @@ public class DeviceService {
     }
 
     public Set getDevices() {
-        return new HashSet<>(devices);
-    }
-
-    public void addDevice(Device device) {
-        this.devices.add(device);
-    }
-
-    public Set getData() {
         CarTrackService carTrackService = new CarTrackService();
         List<Device> devices = carTrackService.fetchCarTrackDevices();
         return new HashSet<>(devices);
@@ -41,7 +33,7 @@ public class DeviceService {
     }
 
     public void save(Device device) {
-        this.devices.add(device);
+        CarTrackService.createCarTrackDevice(device);
     }
 
     public void delete(Device device) {

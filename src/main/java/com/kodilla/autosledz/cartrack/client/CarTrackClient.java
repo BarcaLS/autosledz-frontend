@@ -10,6 +10,9 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 import static java.util.Optional.ofNullable;
@@ -31,6 +34,19 @@ public class CarTrackClient {
         } catch (RestClientException e) {
             LOGGER.error(e.getMessage(), e);
             return new ArrayList<>();
+        }
+    }
+
+    public static void createCarTrackDevice(Device device) {
+        URI url = UriComponentsBuilder.fromHttpUrl(carTrackApiEndpoint + "/devices")
+                .build()
+                .encode()
+                .toUri();
+        try {
+            DeviceDto test = new DeviceDto(0L, device.getName(), device.getUniqueId(), device.getLatitude(), device.getLongitude(), device.getDisplayName(), new Date(), new Date());
+            restTemplate.postForObject(url, test, DeviceDto.class);
+        } catch (RestClientException e) {
+            LOGGER.error(e.getMessage(), e);
         }
     }
 

@@ -8,6 +8,8 @@ import java.util.List;
 public class CarTrackService {
     public static List<Device> fetchCarTrackDevices() { return CarTrackClient.getCarTrackDevices(); }
 
+    public static void createCarTrackDevice(Device device) { CarTrackClient.createCarTrackDevice(device); }
+
     /*public List<TraccarUserDto> fetchTraccarUsers() { return traccarClient.getTraccarUsers(); }
 
     public List<TraccarPositionDto> fetchTraccarPositions() { return traccarClient.getTraccarPositions(); }
