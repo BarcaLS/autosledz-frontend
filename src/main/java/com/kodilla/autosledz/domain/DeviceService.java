@@ -10,7 +10,6 @@ import java.util.stream.Collectors;
 public class DeviceService {
     private Set<Device> devices;
     private static DeviceService deviceService;
-    private static CarTrackService carTrackService;
 
     private DeviceService() {
         this.devices = getData();
@@ -32,12 +31,9 @@ public class DeviceService {
     }
 
     public Set getData() {
-        List<Device> result = carTrackService.fetchCarTrackDevices();
-        return new HashSet<>(result);
-
-        /*Set devices = new HashSet<>();
-        devices.add(new Device(0L, "auto Marcina", "DW234", 20.3443F, 30.23F, "takietam", new Date(), new Date()));
-        return devices;*/
+        CarTrackService carTrackService = new CarTrackService();
+        List<Device> devices = carTrackService.fetchCarTrackDevices();
+        return new HashSet<>(devices);
     }
 
     public Set findByName(String name) {

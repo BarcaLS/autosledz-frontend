@@ -2,17 +2,11 @@ package com.kodilla.autosledz.service;
 
 import com.kodilla.autosledz.cartrack.client.CarTrackClient;
 import com.kodilla.autosledz.domain.Device;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
-@RequiredArgsConstructor
 public class CarTrackService {
-    private final CarTrackClient carTrackClient;
-
-    public List<Device> fetchCarTrackDevices() { return carTrackClient.getCarTrackDevices(); }
+    public static List<Device> fetchCarTrackDevices() { return CarTrackClient.getCarTrackDevices(); }
 
     /*public List<TraccarUserDto> fetchTraccarUsers() { return traccarClient.getTraccarUsers(); }
 

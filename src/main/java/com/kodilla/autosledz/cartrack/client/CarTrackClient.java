@@ -1,15 +1,10 @@
 package com.kodilla.autosledz.cartrack.client;
 
-import com.kodilla.autosledz.cartrack.config.CarTrackConfig;
 import com.kodilla.autosledz.domain.*;
-import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.client.RestTemplateBuilder;
-import org.springframework.context.annotation.Bean;
 import org.springframework.http.*;
-import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -19,33 +14,25 @@ import java.util.*;
 
 import static java.util.Optional.ofNullable;
 
-@Component
-@RequiredArgsConstructor
 public class CarTrackClient {
     private static final Logger LOGGER = LoggerFactory.getLogger(CarTrackClient.class);
+    private static final String carTrackApiEndpoint = "https://shrouded-hollows-51087.herokuapp.com/v1";
+    private static final RestTemplate restTemplate = new RestTemplateBuilder().build();
 
-    @Bean
-    public RestTemplate restTemplate(RestTemplateBuilder builder) {
-        return builder.build();
-    }
-
-    @Autowired
-    private RestTemplate restTemplate;
-
-    private final CarTrackConfig carTrackConfig;
-
-    public List<Device> getCarTrackDevices() {
-        URI url = UriComponentsBuilder.fromHttpUrl(carTrackConfig.getCarTrackApiEndpoint() + "/devices")
+    public static List<Device> getCarTrackDevices() {
+        URI url = UriComponentsBuilder.fromHttpUrl(carTrackApiEndpoint + "/devices")
                 .build()
                 .encode()
                 .toUri();
         try {
             HttpEntity entity = createEntity();
             ResponseEntity<Device[]> devicesResponse = restTemplate.exchange(url, HttpMethod.GET, entity, Device[].class);
+            List<Device> dupa = Arrays.asList(devicesResponse.getBody());
+            System.out.println(dupa.size());
             return Arrays.asList(ofNullable(devicesResponse.getBody()).orElse(new Device[0]));
         } catch (RestClientException e) {
             LOGGER.error(e.getMessage(), e);
-            return new ArrayList<Device>();
+            return new ArrayList<>();
         }
     }
 
@@ -184,7 +171,7 @@ public class CarTrackClient {
         }
     }*/
 
-    HttpEntity createEntity() {
+    public static HttpEntity createEntity() {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
