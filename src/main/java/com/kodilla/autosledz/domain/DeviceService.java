@@ -37,7 +37,11 @@ public class DeviceService {
     }
 
     public void save(Device device) {
-        CarTrackService.createCarTrackDevice(device);
+        if(device.getId() != 0) {
+            CarTrackService.updateCarTrackDevice(device);
+        } else {
+            CarTrackService.createCarTrackDevice(device);
+        }
     }
 
     public void delete(Device device) { CarTrackService.deleteCarTrackDevice(device); }
