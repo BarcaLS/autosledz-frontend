@@ -45,4 +45,6 @@ public class DeviceService {
     }
 
     public void delete(Device device) { CarTrackService.deleteCarTrackDevice(device); }
+
+    public void updatePosition(Device device) { CarTrackService.updatePosition(device); }
 }

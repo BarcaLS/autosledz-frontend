@@ -11,6 +11,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static java.util.Optional.ofNullable;
 
@@ -84,6 +85,40 @@ public class CarTrackClient {
             restTemplate.postForObject(url, deviceDto, DeviceDto.class);
         } catch (RestClientException e) {
             LOGGER.error(e.getMessage(), e);
+        }
+    }
+
+    public static List<Device> getTraccarDevices() {
+        URI url = UriComponentsBuilder.fromHttpUrl(carTrackApiEndpoint + "/traccar/devices")
+                .build()
+                .encode()
+                .toUri();
+        try {
+            HttpEntity entity = createEntity();
+            ResponseEntity<Device[]> devicesResponse = restTemplate.exchange(url, HttpMethod.GET, entity, Device[].class);
+            return Arrays.asList(ofNullable(devicesResponse.getBody()).orElse(new Device[0]));
+        } catch (RestClientException e) {
+            LOGGER.error(e.getMessage(), e);
+            return new ArrayList<>();
+        }
+    }
+
+    public static Device updatePosition(Device device) {
+        List<Device> carTrackDevices = CarTrackClient.getTraccarDevices();
+        List<Device> carTrackFoundDevice = carTrackDevices.stream()
+                .filter(d -> d.getUniqueId().equals(device.getUniqueId()))
+                .collect(Collectors.toList());
+        URI url = UriComponentsBuilder.fromHttpUrl(carTrackApiEndpoint + "/devices/" + carTrackFoundDevice.get(0).getId() + "/" + device.getId() + "/updatePosition")
+                .build()
+                .encode()
+                .toUri();
+        try {
+            HttpEntity entity = createEntity();
+            ResponseEntity<Device> deviceResponse = restTemplate.exchange(url, HttpMethod.GET, entity, Device.class);
+            return ofNullable(deviceResponse.getBody()).orElse(new Device());
+        } catch (RestClientException e) {
+            LOGGER.error(e.getMessage(), e);
+            return new Device();
         }
     }
 

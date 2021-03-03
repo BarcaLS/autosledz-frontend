@@ -18,11 +18,12 @@ public class DeviceForm extends FormLayout {
     private TextField displayName = new TextField("DisplayName");
     private Button save = new Button("Save");
     private Button delete = new Button("Delete");
+    private Button updatePosition = new Button("Update position");
     private DeviceService service = DeviceService.getInstance();
 
     public DeviceForm(MainView mainView) {
         this.mainView = mainView;
-        HorizontalLayout buttons = new HorizontalLayout(save, delete);
+        HorizontalLayout buttons = new HorizontalLayout(save, delete, updatePosition);
         save.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         binder.forField(latitude).bind(
                 device -> Float.toString(device.getLatitude()),
@@ -36,6 +37,7 @@ public class DeviceForm extends FormLayout {
         binder.bindInstanceFields(this);
         save.addClickListener(event -> save());
         delete.addClickListener(event -> delete());
+        updatePosition.addClickListener(event -> updatePosition());
     }
 
     private void save() {
@@ -48,6 +50,13 @@ public class DeviceForm extends FormLayout {
     private void delete() {
         Device device = binder.getBean();
         service.delete(device);
+        mainView.refresh();
+        setDevice(null);
+    }
+
+    private void updatePosition() {
+        Device device = binder.getBean();
+        service.updatePosition(device);
         mainView.refresh();
         setDevice(null);
     }
