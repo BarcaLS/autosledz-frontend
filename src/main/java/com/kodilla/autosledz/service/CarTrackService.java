@@ -2,11 +2,12 @@ package com.kodilla.autosledz.service;
 
 import com.kodilla.autosledz.cartrack.client.CarTrackClient;
 import com.kodilla.autosledz.domain.Device;
+import com.kodilla.autosledz.domain.DeviceDto;
 
 import java.util.List;
 
 public class CarTrackService {
-    public static List<Device> fetchCarTrackDevices() { return CarTrackClient.getCarTrackDevices(); }
+    public static List<DeviceDto> fetchCarTrackDevices() { return CarTrackClient.getCarTrackDevices(); }
 
     public static Device fetchCarTrackDevice(Long id) { return CarTrackClient.getCarTrackDevice(id); }
 

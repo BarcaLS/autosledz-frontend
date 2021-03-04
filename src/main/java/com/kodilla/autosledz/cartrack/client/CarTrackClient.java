@@ -20,15 +20,15 @@ public class CarTrackClient {
     private static final String carTrackApiEndpoint = "https://shrouded-hollows-51087.herokuapp.com/v1";
     private static final RestTemplate restTemplate = new RestTemplateBuilder().build();
 
-    public static List<Device> getCarTrackDevices() {
+    public static List<DeviceDto> getCarTrackDevices() {
         URI url = UriComponentsBuilder.fromHttpUrl(carTrackApiEndpoint + "/devices")
                 .build()
                 .encode()
                 .toUri();
         try {
             HttpEntity entity = createEntity();
-            ResponseEntity<Device[]> devicesResponse = restTemplate.exchange(url, HttpMethod.GET, entity, Device[].class);
-            return Arrays.asList(ofNullable(devicesResponse.getBody()).orElse(new Device[0]));
+            ResponseEntity<DeviceDto[]> devicesResponse = restTemplate.exchange(url, HttpMethod.GET, entity, DeviceDto[].class);
+            return Arrays.asList(ofNullable(devicesResponse.getBody()).orElse(new DeviceDto[0]));
         } catch (RestClientException e) {
             LOGGER.error(e.getMessage(), e);
             return new ArrayList<>();

@@ -1,5 +1,6 @@
 package com.kodilla.autosledz.domain;
 
+import com.kodilla.autosledz.mapper.CarTrackMapper;
 import com.kodilla.autosledz.service.CarTrackService;
 
 import java.util.HashSet;
@@ -24,12 +25,12 @@ public class DeviceService {
     }
 
     public Set getDevices() {
-        List<Device> devices = CarTrackService.fetchCarTrackDevices();
+        List<Device> devices = CarTrackMapper.mapToDevice(CarTrackService.fetchCarTrackDevices());
         return new HashSet<>(devices);
     }
 
     public Set findByName(String name) {
-        List<Device> devices = CarTrackService.fetchCarTrackDevices();
+        List<Device> devices = CarTrackMapper.mapToDevice(CarTrackService.fetchCarTrackDevices());
         return devices.stream()
                 .filter(device -> Objects.nonNull(device.getName()))
                 .filter(device -> device.getName().contains(name))
