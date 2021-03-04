@@ -22,6 +22,8 @@ public class MainView extends VerticalLayout {
     private TextField filter = new TextField();
     private DeviceForm form = new DeviceForm(this);
     private Button addNewDevice = new Button("Add new device");
+    private Button deleteDevices = new Button("Delete all devices");
+
 
     public MainView() {
         filter.setPlaceholder("Filter by name...");
@@ -35,6 +37,11 @@ public class MainView extends VerticalLayout {
             form.setDevice(new Device());
         });
 
+        deleteDevices.addClickListener(e -> {
+            grid.asSingleSelect().clear();
+            form.deleteDevices();
+        });
+
         imageLogo.setWidth("100px");
         imageLogo.getStyle().set("margin-left", "100px");
         label.setWidth("100px");
@@ -43,7 +50,7 @@ public class MainView extends VerticalLayout {
         topBar.setWidth("400px");
         topBar.setDefaultVerticalComponentAlignment(Alignment.CENTER);
 
-        HorizontalLayout toolbar = new HorizontalLayout(filter, addNewDevice);
+        HorizontalLayout toolbar = new HorizontalLayout(filter, addNewDevice, deleteDevices);
         toolbar.setSizeFull();
         toolbar.setHeight("50px");
 

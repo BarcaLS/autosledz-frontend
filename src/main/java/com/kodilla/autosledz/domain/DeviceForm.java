@@ -54,6 +54,12 @@ public class DeviceForm extends FormLayout {
         setDevice(null);
     }
 
+    public void deleteDevices() {
+        service.deleteDevices();
+        mainView.refresh();
+        setDevice(null);
+    }
+
     private void updatePosition() {
         Device device = binder.getBean();
         service.updatePosition(device);

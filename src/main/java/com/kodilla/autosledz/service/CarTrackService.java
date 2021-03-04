@@ -15,6 +15,8 @@ public class CarTrackService {
 
     public static void deleteCarTrackDevice(Device device) { CarTrackClient.deleteCarTrackDevice(device); }
 
+    public static void deleteDevices() { CarTrackClient.deleteDevices(); }
+
     public static void updateCarTrackDevice(Device device) { CarTrackClient.updateCarTrackDevice(device); }
 
     public static void updatePosition(Device device) { CarTrackClient.updatePosition(device); }

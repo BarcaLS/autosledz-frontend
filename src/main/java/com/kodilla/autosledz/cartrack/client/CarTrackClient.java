@@ -75,6 +75,18 @@ public class CarTrackClient {
         }
     }
 
+    public static void deleteDevices() {
+        URI url = UriComponentsBuilder.fromHttpUrl(carTrackApiEndpoint + "/devices/deleteAll")
+                .build()
+                .encode()
+                .toUri();
+        try {
+            restTemplate.delete(url);
+        } catch (RestClientException e) {
+            LOGGER.error(e.getMessage(), e);
+        }
+    }
+
     public static void updateCarTrackDevice(Device device) {
         URI url = UriComponentsBuilder.fromHttpUrl(carTrackApiEndpoint + "/devices")
                 .build()
