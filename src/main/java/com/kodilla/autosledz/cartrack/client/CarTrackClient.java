@@ -17,7 +17,7 @@ import static java.util.Optional.ofNullable;
 
 public class CarTrackClient {
     private static final Logger LOGGER = LoggerFactory.getLogger(CarTrackClient.class);
-    private static final String carTrackApiEndpoint = "https://shrouded-hollows-51087.herokuapp.com/v1";
+    private static final String carTrackApiEndpoint = "http://example.com";
     private static final RestTemplate restTemplate = new RestTemplateBuilder().build();
 
     public static List<DeviceDto> getCarTrackDevices() {
